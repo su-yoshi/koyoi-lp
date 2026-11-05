@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>あなたに合う鑑定先が分かる3つの質問｜こよいの星読み</title>
+<meta name="description" content="復縁・音信不通・片思いの悩みに。3つの質問に答えるだけで、あなたに合うプロの電話占いをご案内します。">
+<style>
+:root{
+--navy:#141433; --navy2:#1d1d45; --gold:#e8c268; --gold2:#f5d98c;
+--ink:#26262e; --paper:#faf8f3; --line:#e5ddc9; --muted:#6d6d78;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP",sans-serif;background:var(--paper);color:var(--ink);line-height:1.8;font-size:16px}
+.wrap{max-width:640px;margin:0 auto;padding:0 18px 56px}
+.pr{font-size:12px;color:var(--muted);border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 12px;margin:14px 0}
+header{background:linear-gradient(160deg,var(--navy),var(--navy2));color:#fff;border-radius:0 0 24px 24px;padding:34px 22px 30px;text-align:center;margin:0 -18px}
+header.moon{font-size:34px}
+header h1{font-size:23px;line-height:1.5;margin:8px 0 10px;font-weight:700}
+header p{font-size:14px;color:#d9d6ee}
+h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--gold)}
+p.lead{font-size:15px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin:14px 0}
+.q{font-weight:700;margin-bottom:10px}
+.opts{display:grid;gap:8px}
+.opt{display:block;width:100%;text-align:left;background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;font-size:15px;cursor:pointer;font-family:inherit}
+.opt:hover{border-color:var(--gold)}
+.opt.sel{background:#fdf3d7;border-color:var(--gold);font-weight:700}
+.btn{display:block;width:100%;background:var(--gold);color:#3a2f05;border:none;border-radius:12px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:16px}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sub{background:#fff;border:1.5px solid var(--gold);color:#7a5f10}
+.hidden{display:none}
+.result-head{background:linear-gradient(160deg,var(--navy),var(--navy2));color:#fff;border-radius:14px;padding:20px;margin:14px 0}
+.result-head.tag{display:inline-block;background:var(--gold);color:#3a2f05;font-size:12px;font-weight:700;border-radius:20px;padding:2px 10px;margin-bottom:8px}
+.svc h3{font-size:17px;margin-bottom:4px}
+.svc.point{font-size:14px;color:#4c4c55}
+.svc.fee{font-size:13px;color:var(--muted);margin-top:8px}
+.note{font-size:13px;color:var(--muted)}
+ul.check{list-style:none;font-size:14.5px}
+ul.check li{padding:6px 0 6px 26px;position:relative;border-bottom:1px dashed var(--line)}
+ul.check li:last-child{border-bottom:none}
+ul.check li::before{content:"✓";position:absolute;left:4px;color:#b8912f;font-weight:700}
+footer{margin-top:40px;font-size:12.5px;color:var(--muted)}
+footer.box{border:1px solid var(--line);border-radius:10px;background:#fff;padding:14px}
+a{color:#8a6d1f}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="pr">このページはアフィリエイト広告を含みます。リンク先のサービスに登録・利用があった場合、運営者に報酬が発生することがあります。</div>
+
+<header>
+<div class="moon">🌙</div>
+<h1>星読みでは届かない悩みに、<br>プロの鑑定を。</h1>
+<p>復縁・音信不通・片思い。3つの質問に答えるだけで、<br>あなたに合う電話占いをご案内します（無料・約10秒）。</p>
+</header>
+
+<h2>このページの約束</h2>
+<div class="card">
+<ul class="check">
+<li>「こよい」は星占いのエンタメ発信です。個別の鑑定は行っていません</li>
+<li>深い相談は、実在のプロ鑑定士がいる電話占いサービスへご案内します</li>
+<li>料金の仕組みと無料の範囲は、先に正直に書きます</li>
+<li>「必ず復縁する」といった断定はしません</li>
+</ul>
+</div>
+
+<h2>3つの質問</h2>
+<div class="card" id="quiz">
+<div class="q">Q1. いちばん近い悩みは？</div>
+<div class="opts" data-q="q1">
+<button class="opt" data-v="復縁">復縁したい</button>
+<button class="opt" data-v="音信不通">音信不通で連絡が取れない</button>
+<button class="opt" data-v="片思い">片思いが進展しない</button>
+<button class="opt" data-v="その他">その他の恋愛の悩み</button>
+</div>
+<div class="q" style="margin-top:20px">Q2. 相手との今の状態は？</div>
+<div class="opts" data-q="q2">
+<button class="opt" data-v="連絡なし">まったく連絡が取れていない</button>
+<button class="opt" data-v="たまに連絡">たまに連絡はある</button>
+<button class="opt" data-v="友達のまま">友達のまま止まっている</button>
+</div>
+<div class="q" style="margin-top:20px">Q3. 鑑定の受け方は？</div>
+<div class="opts" data-q="q3">
+<button class="opt" data-v="free">まずは無料で試したい</button>
+<button class="opt" data-v="deep">しっかり時間をかけて話したい</button>
+</div>
+<button class="btn" id="go" disabled>結果を見る</button>
+</div>
+
+<div id="result" class="hidden">
+<div class="result-head">
+<span class="tag">あなたへのおすすめ</span>
+<div id="result-title" style="font-size:18px;font-weight:700"></div>
+<p id="result-desc" style="font-size:14px;color:#d9d6ee;margin-top:6px"></p>
+</div>
+<div id="svc-list"></div>
+<button class="btn sub" id="retry">もう一度診断する</button>
+</div>
+
+<h2>ご案内するサービスの正直な情報</h2>
+<div class="card">
+<p class="lead"><strong>電話占いヴェルニ</strong><br>
+<span class="note">老舗の電話占い。鑑定士が多く、深夜もつながりやすいのが特徴です。新規登録で初回鑑定に使えるポイント特典があります（特典内容は時期で変わるため、公式サイトでご確認ください）。鑑定は1分単位の従量課金で、鑑定士により単価が異なります。</span></p>
+</div>
+<div class="card">
+<p class="lead"><strong>電話占いリノア</strong><br>
+<span class="note">新規の無料電話鑑定の入口があるサービスです。「まず無料で一度話してみたい」という方に向いています。無料範囲を超えると有料になります。</span></p>
+</div>
+<div class="card">
+<p class="lead"><strong>ココナラ電話占い</strong><br>
+<span class="note">スキルマーケット「ココナラ」の電話占い。鑑定士ごとの料金とレビューが見やすく、1分単位の料金が先に分かります。じっくり話したい方の比較検討向きです。</span></p>
+</div>
+
+<h2>利用前に知っておいてほしいこと</h2>
+<div class="card">
+<ul class="check">
+<li>各サービスの対象は18歳以上の方です</li>
+<li>無料特典には条件があります。登録前に各公式サイトでご確認ください</li>
+<li>購入したポイントは返金できないサービスがほとんどです</li>
+<li>鑑定はエンターテインメントです。医療・法律・金銭の判断は専門家へ</li>
+<li>悩みが深いときは、無理に課金を重ねず、一度間を置いてください</li>
+</ul>
+</div>
+
+<footer>
+<div class="box">
+運営：こよい（星読みエンタメアカウント @koyoi_hoshiyomi）<br>
+お問い合わせ：<br>
+本ページの星読みコンテンツはエンターテインメントです。鑑定結果を保証するものではありません。
+</div>
+</footer>
+</div>
+
+<script>
+// 送客リンクはASP提携承認後に差し替える（href="#" はプレースホルダ）
+const LINKS = {
+vernis: "#", // ヴェルニ直接アフィリエイトのリンクに差し替え
+rinoa: "#", // A8 リノアのリンクに差し替え
+coconala: "#" // A8 ココナラ電話占いのリンクに差し替え
+};
+const SERVICES = {
+vernis: {name:"電話占いヴェルニ", point:"新規登録の特典ポイントで、初回鑑定を試せます。鑑定士の数が多く、復縁相談の実績ジャンルが厚いサービスです。", fee:"料金：1分あたりの従量課金（鑑定士により異なる）。無料登録だけなら料金はかかりません。", link:LINKS.vernis, cta:"ヴェルニに無料登録する"},
+rinoa: {name:"電話占いリノア", point:"新規の無料電話鑑定から始められます。「まず一度、無料で話してみたい」に一番合う入口です。", fee:"料金：無料鑑定の範囲を超えると有料。条件は公式サイトで確認してください。", link:LINKS.rinoa, cta:"リノアで無料鑑定を試す"},
+coconala: {name:"ココナラ電話占い", point:"鑑定士ごとの料金とレビューを比べて選べます。時間をかけて話したい方の本命です。", fee:"料金：1分単位（鑑定士により異なる）。通話前に単価が分かります。", link:LINKS.coconala, cta:"ココナラで鑑定士を探す"}
+};
+const ans = {};
+document.querySelectorAll(".opts").forEach(group=>{
+group.addEventListener("click", e=>{
+const btn = e.target.closest(".opt"); if(!btn) return;
+group.querySelectorAll(".opt").forEach(b=>b.classList.remove("sel"));
+btn.classList.add("sel");
+ans[group.dataset.q] = btn.dataset.v;
+document.getElementById("go").disabled =!(ans.q1 && ans.q2 && ans.q3);
+});
+});
+document.getElementById("go").addEventListener("click", ()=>{
+const free = ans.q3 === "free";
+const order = free? ["vernis","rinoa","coconala"]: ["coconala","vernis","rinoa"];
+document.getElementById("result-title").textContent =
+`「${ans.q1}」で悩む、${ans.q2}あなたへ`;
+document.getElementById("result-desc").textContent = free
+? "まずは無料の範囲で、プロに一度話してみるのがおすすめです。"
+: "料金が先に分かるサービスから、じっくり話せる順に並べました。";
+document.getElementById("svc-list").innerHTML = order.map((k,i)=>{
+const s = SERVICES[k];
+return `<div class="card svc"><h3>${i===0?"⭐ いちばんのおすすめ：":""}${s.name}</h3>
+<p class="point">${s.point}</p><p class="fee">${s.fee}</p>
+<a class="btn" href="${s.link}" rel="sponsored noopener" target="_blank" style="text-decoration:none;text-align:center">${s.cta}</a></div>`;
+}).join("");
+document.getElementById("quiz").classList.add("hidden");
+document.getElementById("result").classList.remove("hidden");
+document.getElementById("result").scrollIntoView({behavior:"smooth"});
+});
+document.getElementById("retry").addEventListener("click", ()=>{
+document.getElementById("result").classList.add("hidden");
+document.getElementById("quiz").classList.remove("hidden");
+document.getElementById("quiz").scrollIntoView({behavior:"smooth"});
+});
+</script>
+</body>
+</html>
