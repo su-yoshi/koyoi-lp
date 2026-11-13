@@ -106,6 +106,17 @@
   .copied{text-align:center;font-size:13px;color:var(--gold2);min-height:20px;margin-top:6px}
   #copy-box{display:none;margin-top:12px}
   #copy-box textarea{width:100%;box-sizing:border-box;background:#0b1026;color:var(--ink);border:1px solid #c9a24b66;border-radius:12px;padding:12px;font-size:13px;line-height:1.7;font-family:inherit;resize:vertical}
+  .reading-wrap{padding:34px 6px 10px;text-align:center}
+  .reading-icon{width:118px;height:118px;border-radius:50%;border:2px solid var(--gold2);object-fit:cover;animation:pulseGlow 2.2s ease-in-out infinite}
+  @keyframes pulseGlow{0%,100%{box-shadow:0 0 16px #f5d98c2e}50%{box-shadow:0 0 46px #f5d98c85}}
+  .rline{font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-size:17px;line-height:1.6;margin:16px 0 0;opacity:0;transform:translateY(10px);transition:opacity .7s ease,transform .7s ease}
+  .rline.on{opacity:1;transform:none}
+  .rline.gold{color:var(--gold2)}
+  .rbar{width:230px;height:4px;background:#ffffff1c;border-radius:99px;margin:28px auto 0;overflow:hidden}
+  .rbar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:99px;transition:width 3s linear}
+  .rbar-fill.go{width:100%}
+  .rskip{margin-top:18px;font-size:11px;color:var(--muted);opacity:0;transition:opacity .8s ease}
+  .rskip.on{opacity:1}
   .icon-img{display:block;width:138px;height:138px;border-radius:50%;margin:0 auto;object-fit:cover;border:2px solid var(--gold);box-shadow:0 0 34px #d9b45b66, 0 10px 30px #00000060}
   .barnote{font-size:12px;color:var(--ink-dim);margin:-2px 0 8px}
 </style>
@@ -141,6 +152,18 @@ if (window.GA_ID) {
     <p class="qnum" id="qnum"></p>
     <p class="qtext" id="qtext"></p>
     <div id="opts"></div>
+  </section>
+
+  <!-- 読み取り演出 -->
+  <section id="scr-reading" class="screen">
+    <div class="reading-wrap">
+      <img id="reading-icon" class="reading-icon" alt="">
+      <p class="rline" id="rl1">8つの答えを受け取りました🌙</p>
+      <p class="rline" id="rl2">星の並びと、答えを重ねています…</p>
+      <p class="rline gold" id="rl3">詰まりどころが、見えてきました</p>
+      <div class="rbar"><div class="rbar-fill" id="rbar-fill"></div></div>
+      <p class="rskip" id="rskip">タップで結果へ進めます</p>
+    </div>
   </section>
 
   <!-- 結果画面 -->
@@ -365,11 +388,33 @@ function renderQ(){
       scores[t] = (scores[t]||0) + 1;
       lastPicked[t] = cur;
       cur++;
-      if(cur < QUESTIONS.length){ renderQ(); } else { renderResult(); }
+      if(cur < QUESTIONS.length){ renderQ(); } else { startReading(); }
     };
     box.appendChild(b);
   });
 }
+let readingTimers = [];
+function startReading(){
+  show("scr-reading");
+  $("reading-icon").src = $("icon-img").src;
+  ["rl1","rl2","rl3"].forEach(id=>$(id).classList.remove("on"));
+  $("rskip").classList.remove("on");
+  const fill = $("rbar-fill");
+  fill.classList.remove("go"); void fill.offsetWidth;
+  readingTimers.forEach(clearTimeout); readingTimers = [];
+  const at = (ms, fn)=>readingTimers.push(setTimeout(fn, ms));
+  at(200, ()=>$("rl1").classList.add("on"));
+  at(350, ()=>fill.classList.add("go"));
+  at(1250, ()=>$("rl2").classList.add("on"));
+  at(1700, ()=>$("rskip").classList.add("on"));
+  at(2300, ()=>$("rl3").classList.add("on"));
+  at(3400, finishReading);
+}
+function finishReading(){
+  readingTimers.forEach(clearTimeout); readingTimers = [];
+  renderResult();
+}
+$("scr-reading").onclick = finishReading;
 function renderResult(){
   const order = Object.keys(TYPES).sort((a,b)=>{
     const d = rateOf(b) - rateOf(a);
