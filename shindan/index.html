@@ -103,7 +103,9 @@
   .bridge{border-top:1px solid var(--line);margin-top:32px;padding-top:16px;text-align:center}
   .bridge p{font-size:12.5px;color:var(--ink-dim)}
   .bridge a{color:var(--gold2);text-decoration:underline}
-  .copied{text-align:center;font-size:13px;color:var(--gold2);height:20px;margin-top:6px}
+  .copied{text-align:center;font-size:13px;color:var(--gold2);min-height:20px;margin-top:6px}
+  #copy-box{display:none;margin-top:12px}
+  #copy-box textarea{width:100%;box-sizing:border-box;background:#0b1026;color:var(--ink);border:1px solid #c9a24b66;border-radius:12px;padding:12px;font-size:13px;line-height:1.7;font-family:inherit;resize:vertical}
   .icon-img{display:block;width:138px;height:138px;border-radius:50%;margin:0 auto;object-fit:cover;border:2px solid var(--gold);box-shadow:0 0 34px #d9b45b66, 0 10px 30px #00000060}
   .barnote{font-size:12px;color:var(--ink-dim);margin:-2px 0 8px}
 </style>
@@ -195,6 +197,7 @@ if (window.GA_ID) {
       <button class="btn sub2" id="btn-retry">もう一度やる</button>
     </div>
     <p class="copied" id="copied"></p>
+      <div id="copy-box"><textarea id="copy-text" readonly rows="7"></textarea></div>
 
     <div class="bridge">
       <p>もっと深く視てもらいたい方へ。<br>案内ページの3つの質問のうち、1つ目はあなたの結果に合わせて選んであります → <a id="bridge-link" href="https://su-yoshi.github.io/koyoi-lp/#quiz">3つの質問へ進む</a></p>
@@ -410,8 +413,23 @@ $("btn-retry").onclick = ()=>{
 $("btn-copy").onclick = async ()=>{
   const T = TYPES[resultType];
   const text = "🌙 恋の詰まりどころ診断\n私は「"+T.name+"」でした。"+T.summary+"。\n最初の一手："+T.step1+"\n診断はこちら：https://su-yoshi.github.io/koyoi-lp/shindan/\n#こよい星読み";
-  try{ await navigator.clipboard.writeText(text); $("copied").textContent = "コピーしました。そのまま投稿に貼れます。"; }
-  catch(e){ $("copied").textContent = "コピーできませんでした。結果画面のスクリーンショットでも大丈夫です。"; }
+  let ok = false;
+  try{ await navigator.clipboard.writeText(text); ok = true; }catch(e){}
+  if(!ok){
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly","");
+    ta.style.cssText = "position:fixed;top:0;left:0;width:100%;opacity:0.01;font-size:16px;";
+    document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, text.length);
+    try{ ok = document.execCommand("copy"); }catch(e){ ok = false; }
+    ta.remove();
+  }
+  if(ok){ $("copied").textContent = "コピーしました。そのまま投稿に貼れます。"; }
+  else{
+    $("copy-text").value = text;
+    $("copy-box").style.display = "block";
+    $("copied").textContent = "自動コピーできない環境でした。下の欄を長押し→すべて選択→コピーで使えます。";
+    $("copy-box").scrollIntoView({behavior:"smooth", block:"center"});
+  }
 };
 function wrapText(c, text, x, y, maxW, lh, maxLines){
   let line = "", lines = 0;
