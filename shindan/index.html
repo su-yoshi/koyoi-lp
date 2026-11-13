@@ -133,8 +133,8 @@ if (window.GA_ID) {
   s.src = "https://www.googletagmanager.com/gtag/js?id=" + window.GA_ID;
   document.head.appendChild(s);
   window.dataLayer = window.dataLayer || [];
-  function gtag(){ dataLayer.push(arguments); }
-  gtag("js", new Date()); gtag("config", window.GA_ID);
+  window.gtag = function(){ dataLayer.push(arguments); };
+  window.gtag("js", new Date()); window.gtag("config", window.GA_ID);
 }
 </script>
 </head>
@@ -180,13 +180,6 @@ if (window.GA_ID) {
     <p class="rsummary" id="r-summary"></p>
 
     <div class="sec">
-      <h3>あなたの回答の内訳</h3>
-      <p class="barnote">タイプごとに、選ばれた割合で比べています</p>
-      <div class="bars" id="r-bars"></div>
-      <p class="combo" id="r-combo"></p>
-    </div>
-
-    <div class="sec">
       <h3>あるある</h3>
       <ul id="r-aruaru"></ul>
     </div>
@@ -194,6 +187,13 @@ if (window.GA_ID) {
     <div class="sec">
       <h3>今の状態</h3>
       <p id="r-state"></p>
+    </div>
+
+    <div class="sec">
+      <h3>あなたの回答の内訳</h3>
+      <p class="barnote">タイプごとに、選ばれた割合で比べています</p>
+      <div class="bars" id="r-bars"></div>
+      <p class="combo" id="r-combo"></p>
     </div>
 
     <div class="star">
@@ -431,6 +431,13 @@ function finishReading(){
   renderResult();
 }
 $("scr-reading").onclick = finishReading;
+function gaEvent(name, params){
+  try{
+    if (window.GA_ID && typeof window.gtag === "function") {
+      if (params) window.gtag("event", name, params); else window.gtag("event", name);
+    }
+  }catch(e){}
+}
 function renderResult(){
   const order = Object.keys(TYPES).sort((a,b)=>{
     const d = rateOf(b) - rateOf(a);
@@ -461,27 +468,31 @@ function renderResult(){
   const Q1MAP = {t1:"音信不通",t2:"復縁",t3:"片思い",t4:"その他",t5:"音信不通",t6:"その他",t7:"その他"};
   $("bridge-link").href = "https://su-yoshi.github.io/koyoi-lp/?q1=" + encodeURIComponent(Q1MAP[resultType]) + "#quiz";
   $("copied").textContent = "";
+  gaEvent("shindan_complete", {result_type: resultType, second_type: secondType});
   show("scr-r");
 }
 $("btn-start").onclick = ()=>{
+  gaEvent("shindan_start");
   cur = 0; scores = {}; lastPicked = {};
   show("scr-q"); renderQ();
 };
 $("btn-retry").onclick = ()=>{
+  gaEvent("shindan_retry");
   cur = 0; scores = {}; lastPicked = {};
   show("scr-q"); renderQ();
 };
+$("bridge-link").addEventListener("click", ()=>gaEvent("bridge_click", {result_type: resultType}));
 $("btn-copy").onclick = async ()=>{
   const T = TYPES[resultType];
   const text = "🌙 恋の詰まりどころ診断\n私は「"+T.name+"」でした。"+T.summary+"。\n最初の一手："+T.step1+"\n診断はこちら：https://su-yoshi.github.io/koyoi-lp/shindan/\n#こよい星読み";
-  let ok = false;
-  try{ await navigator.clipboard.writeText(text); ok = true; }catch(e){}
+  let ok = false; let method = "";
+  try{ await navigator.clipboard.writeText(text); ok = true; method = "clipboard"; }catch(e){}
   if(!ok){
     const ta = document.createElement("textarea");
     ta.value = text; ta.setAttribute("readonly","");
     ta.style.cssText = "position:fixed;top:0;left:0;width:100%;opacity:0.01;font-size:16px;";
     document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, text.length);
-    try{ ok = document.execCommand("copy"); }catch(e){ ok = false; }
+    try{ ok = document.execCommand("copy"); if(ok) method = "execcommand"; }catch(e){ ok = false; }
     ta.remove();
   }
   if(ok){ $("copied").textContent = "コピーしました。そのまま投稿に貼れます。"; }
@@ -491,6 +502,7 @@ $("btn-copy").onclick = async ()=>{
     $("copied").textContent = "自動コピーできない環境でした。下の欄を長押し→すべて選択→コピーで使えます。";
     $("copy-box").scrollIntoView({behavior:"smooth", block:"center"});
   }
+  gaEvent("result_copy", {method: method || "manual", result_type: resultType});
 };
 function wrapText(c, text, x, y, maxW, lh, maxLines){
   let line = "", lines = 0;
@@ -542,6 +554,7 @@ $("btn-card").onclick = () => {
     a.href = URL.createObjectURL(b); a.download = "koyoi-shindan-result.png"; a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 4000);
     $("copied").textContent = "結果カードを保存しました。そのまま投稿に使えます。";
+    gaEvent("card_save", {result_type: resultType});
   });
 };
 
