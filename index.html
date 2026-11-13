@@ -199,7 +199,8 @@ document.getElementById("go").disabled =!(ans.q1 && ans.q2 && ans.q3);
 });
 document.getElementById("go").addEventListener("click", ()=>{
 const free = ans.q3 === "free";
-const order = free? ["vernis","rinoa","coconala"]: ["coconala","vernis","rinoa"];
+const order = (free? ["vernis","coconala"]: ["coconala","vernis"]).filter(k=>SERVICES[k].link && SERVICES[k].link !== "#");
+if (window.gtag) gtag("event", "lp_quiz_complete", {path: free? "free": "paid", q1: ans.q1});
 document.getElementById("result-title").textContent =
 `「${ans.q1}」で悩む、${ans.q2}あなたへ`;
 document.getElementById("result-desc").textContent = free
@@ -209,12 +210,17 @@ document.getElementById("svc-list").innerHTML = order.map((k,i)=>{
 const s = SERVICES[k];
 return `<div class="card svc"><h3>${i===0?"⭐ いちばんのおすすめ：":""}${s.name}</h3>
 <p class="point">${s.point}</p><p class="fee">${s.fee}</p>
-<a class="btn" href="${s.link}" rel="sponsored noopener" target="_blank" style="text-decoration:none;text-align:center">${s.cta}</a></div>`;
+<a class="btn" data-svc="${k}" href="${s.link}" rel="sponsored noopener" target="_blank" style="text-decoration:none;text-align:center">${s.cta}</a></div>`;
 }).join("");
 document.getElementById("quiz").classList.add("hidden");
 document.getElementById("result").classList.remove("hidden");
 document.getElementById("result").scrollIntoView({behavior:"smooth"});
 });
+document.getElementById("svc-list").addEventListener("click", e=>{
+const a = e.target.closest("a.btn"); if(!a) return;
+if (window.gtag) gtag("event", "service_click", {service: a.dataset.svc || ""});
+});
+if (preQ1 && window.gtag) gtag("event", "lp_bridge_arrive", {q1: preQ1});
 document.getElementById("retry").addEventListener("click", ()=>{
 document.getElementById("result").classList.add("hidden");
 document.getElementById("quiz").classList.remove("hidden");
