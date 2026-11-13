@@ -7,41 +7,57 @@
 <meta name="description" content="復縁・音信不通・片思いの悩みに。3つの質問に答えるだけで、あなたに合うプロの電話占いをご案内します。">
 <style>
 :root{
---navy:#141433; --navy2:#1d1d45; --gold:#e8c268; --gold2:#f5d98c;
---ink:#26262e; --paper:#faf8f3; --line:#e5ddc9; --muted:#6d6d78;
+--navy:#131336; --navy2:#232357; --gold:#cfa64a; --gold2:#e8c268; --goldsoft:#f5d98c;
+--ink:#2b2b33; --paper:#faf7ef; --line:#e7dec9; --muted:#71717c;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP",sans-serif;background:var(--paper);color:var(--ink);line-height:1.8;font-size:16px}
-.wrap{max-width:640px;margin:0 auto;padding:0 18px 56px}
-.pr{font-size:12px;color:var(--muted);border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 12px;margin:14px 0}
-header{background:linear-gradient(160deg,var(--navy),var(--navy2));color:#fff;border-radius:0 0 24px 24px;padding:34px 22px 30px;text-align:center;margin:0 -18px}
-header.moon{font-size:34px}
-header h1{font-size:23px;line-height:1.5;margin:8px 0 10px;font-weight:700}
-header p{font-size:14px;color:#d9d6ee}
-h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--gold)}
+body{font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP",sans-serif;background:var(--paper);color:var(--ink);line-height:1.85;font-size:16px}
+.wrap{max-width:640px;margin:0 auto;padding:0 18px 60px}
+.pr{font-size:12px;color:var(--muted);border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 13px;margin:14px 0;box-shadow:0 1px 4px #3a2f0510}
+header{
+background:
+radial-gradient(1.5px 1.5px at 14% 22%, #ffffffd9 50%, transparent 51%),
+radial-gradient(1px 1px at 30% 64%, #ffffff99 50%, transparent 51%),
+radial-gradient(1.8px 1.8px at 52% 16%, #ffeeb0e6 50%, transparent 51%),
+radial-gradient(1px 1px at 68% 52%, #ffffffa6 50%, transparent 51%),
+radial-gradient(1.4px 1.4px at 84% 26%, #ffffffcc 50%, transparent 51%),
+radial-gradient(1px 1px at 92% 70%, #ffffff8c 50%, transparent 51%),
+radial-gradient(ellipse 80% 200px at 50% -60px, #e8c26833, transparent 70%),
+linear-gradient(160deg,var(--navy),var(--navy2));
+color:#fff;border-radius:0 0 28px 28px;padding:40px 22px 34px;text-align:center;margin:0 -18px;
+box-shadow:0 10px 30px #13133630}
+header .moon{font-size:40px;filter:drop-shadow(0 0 16px #f5d98caa)}
+header h1{font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho",serif;font-size:24px;line-height:1.6;margin:12px 0 6px;font-weight:700;letter-spacing:.03em}
+header .orn{color:var(--gold2);letter-spacing:.6em;text-indent:.6em;font-size:11px;margin:8px 0 10px}
+header p{font-size:14px;color:#dcd9f0}
+h2{font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-size:19.5px;margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line);letter-spacing:.04em}
+h2::before{content:"✦ ";color:var(--gold);font-size:14px}
 p.lead{font-size:15px}
-.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin:14px 0}
-.q{font-weight:700;margin-bottom:10px}
-.opts{display:grid;gap:8px}
-.opt{display:block;width:100%;text-align:left;background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;font-size:15px;cursor:pointer;font-family:inherit}
-.opt:hover{border-color:var(--gold)}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin:14px 0;box-shadow:0 3px 14px #3a2f050d}
+.q{font-weight:700;margin-bottom:10px;font-size:16.5px}
+.q .qno{color:var(--gold);font-family:"Hiragino Mincho ProN","Yu Mincho",serif;margin-right:6px}
+.opts{display:grid;gap:9px}
+.opt{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:13px 15px;font-size:15px;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s;color:var(--ink)}
+.opt::before{content:"";flex:none;width:17px;height:17px;border-radius:50%;border:1.5px solid #c9bd9a;background:#fff}
+.opt:hover{border-color:var(--gold2)}
 .opt.sel{background:#fdf3d7;border-color:var(--gold);font-weight:700}
-.btn{display:block;width:100%;background:var(--gold);color:#3a2f05;border:none;border-radius:12px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:16px}
-.btn:disabled{opacity:.4;cursor:default}
-.btn.sub{background:#fff;border:1.5px solid var(--gold);color:#7a5f10}
+.opt.sel::before{background:radial-gradient(circle,var(--gold) 0 5px,#fff 6px);border-color:var(--gold)}
+.btn{display:block;width:100%;background:linear-gradient(180deg,var(--goldsoft),var(--gold2) 55%,var(--gold));color:#3a2f05;border:none;border-radius:999px;padding:16px;font-size:16px;font-weight:700;letter-spacing:.05em;cursor:pointer;font-family:inherit;margin-top:18px;box-shadow:0 5px 18px #cfa64a40}
+.btn:disabled{opacity:.4;cursor:default;box-shadow:none}
+.btn.sub{background:#fff;border:1.5px solid var(--gold);color:#7a5f10;box-shadow:none}
 .hidden{display:none}
-.result-head{background:linear-gradient(160deg,var(--navy),var(--navy2));color:#fff;border-radius:14px;padding:20px;margin:14px 0}
-.result-head.tag{display:inline-block;background:var(--gold);color:#3a2f05;font-size:12px;font-weight:700;border-radius:20px;padding:2px 10px;margin-bottom:8px}
-.svc h3{font-size:17px;margin-bottom:4px}
-.svc.point{font-size:14px;color:#4c4c55}
-.svc.fee{font-size:13px;color:var(--muted);margin-top:8px}
-.note{font-size:13px;color:var(--muted)}
+.result-head{background:linear-gradient(160deg,var(--navy),var(--navy2));color:#fff;border-radius:16px;padding:22px;margin:14px 0;box-shadow:0 8px 24px #13133628}
+.result-head .tag{display:inline-block;background:linear-gradient(180deg,var(--goldsoft),var(--gold2));color:#3a2f05;font-size:12px;font-weight:700;border-radius:20px;padding:3px 12px;margin-bottom:10px}
+.svc h3{font-size:17px;margin-bottom:5px}
+.svc .point{font-size:14.5px;color:#4c4c55}
+.svc .fee{font-size:13px;color:var(--muted);margin-top:8px}
+.note{font-size:13.5px;color:var(--muted)}
 ul.check{list-style:none;font-size:14.5px}
-ul.check li{padding:6px 0 6px 26px;position:relative;border-bottom:1px dashed var(--line)}
+ul.check li{padding:7px 0 7px 27px;position:relative;border-bottom:1px dashed var(--line)}
 ul.check li:last-child{border-bottom:none}
-ul.check li::before{content:"✓";position:absolute;left:4px;color:#b8912f;font-weight:700}
-footer{margin-top:40px;font-size:12.5px;color:var(--muted)}
-footer.box{border:1px solid var(--line);border-radius:10px;background:#fff;padding:14px}
+ul.check li::before{content:"✓";position:absolute;left:5px;color:#b8912f;font-weight:700}
+footer{margin-top:44px;font-size:12.5px;color:var(--muted)}
+footer .box{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px;box-shadow:0 2px 10px #3a2f050a}
 a{color:#8a6d1f}
 </style>
 </head>
@@ -53,6 +69,7 @@ a{color:#8a6d1f}
 <header>
 <div class="moon">🌙</div>
 <h1>星読みでは届かない悩みに、<br>プロの鑑定を。</h1>
+<div class="orn">✦ ✦ ✦</div>
 <p>復縁・音信不通・片思い。3つの質問に答えるだけで、<br>あなたに合う電話占いをご案内します（無料・約10秒）。</p>
 </header>
 
@@ -68,20 +85,20 @@ a{color:#8a6d1f}
 
 <h2>3つの質問</h2>
 <div class="card" id="quiz">
-<div class="q">Q1. いちばん近い悩みは？</div>
+<div class="q"><span class="qno">Q1</span>いちばん近い悩みは？</div>
 <div class="opts" data-q="q1">
 <button class="opt" data-v="復縁">復縁したい</button>
 <button class="opt" data-v="音信不通">音信不通で連絡が取れない</button>
 <button class="opt" data-v="片思い">片思いが進展しない</button>
 <button class="opt" data-v="その他">その他の恋愛の悩み</button>
 </div>
-<div class="q" style="margin-top:20px">Q2. 相手との今の状態は？</div>
+<div class="q" style="margin-top:22px"><span class="qno">Q2</span>相手との今の状態は？</div>
 <div class="opts" data-q="q2">
 <button class="opt" data-v="連絡なし">まったく連絡が取れていない</button>
 <button class="opt" data-v="たまに連絡">たまに連絡はある</button>
 <button class="opt" data-v="友達のまま">友達のまま止まっている</button>
 </div>
-<div class="q" style="margin-top:20px">Q3. 鑑定の受け方は？</div>
+<div class="q" style="margin-top:22px"><span class="qno">Q3</span>鑑定の受け方は？</div>
 <div class="opts" data-q="q3">
 <button class="opt" data-v="free">まずは無料で試したい</button>
 <button class="opt" data-v="deep">しっかり時間をかけて話したい</button>
@@ -93,7 +110,7 @@ a{color:#8a6d1f}
 <div class="result-head">
 <span class="tag">あなたへのおすすめ</span>
 <div id="result-title" style="font-size:18px;font-weight:700"></div>
-<p id="result-desc" style="font-size:14px;color:#d9d6ee;margin-top:6px"></p>
+<p id="result-desc" style="font-size:14px;color:#dcd9f0;margin-top:6px"></p>
 </div>
 <div id="svc-list"></div>
 <button class="btn sub" id="retry">もう一度診断する</button>
@@ -127,7 +144,7 @@ a{color:#8a6d1f}
 <footer>
 <div class="box">
 運営：こよい（星読みエンタメアカウント @koyoi_hoshiyomi）<br>
-お問い合わせ：<br>
+お問い合わせ：koyoi.hoshiyomi@gmail.com<br>
 本ページの星読みコンテンツはエンターテインメントです。鑑定結果を保証するものではありません。
 </div>
 </footer>
